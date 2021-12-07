@@ -17,7 +17,7 @@ function lastIndexOf(array, value, fromIndex = null) {
   }
 
   for (let i = fromIndex; i >= 0; i--) {
-    if (array[i] == value) {
+    if (array[i] === value) {
       return i;
     }
   }
