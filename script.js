@@ -1,15 +1,22 @@
 const arr = [1, 2, 3, 4, 5];
 
-function firstIndex(arr) {
-  for (let i = 1; i < arr[1]; i++) {
-    console.log(i);
+function firstIndexOf(arr, val) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] === val) {
+      return i;
+    }
   }
+  return -1;
 }
 
-firstIndex(arr);
+console.log(firstIndexOf(arr, 3));
 
-function lastIndexOf(array, value) {
-  for (let i = array.length - 1; i >= 0; i--) {
+function lastIndexOf(array, value, fromIndex = null) {
+  if (fromIndex === null) {
+    fromIndex = array.length - 1;
+  }
+
+  for (let i = fromIndex; i >= 0; i--) {
     if (array[i] == value) {
       return i;
     }
@@ -19,85 +26,83 @@ function lastIndexOf(array, value) {
 
 console.log(lastIndexOf(arr, 5));
 
-function find(arr, val) {
-  for (let i in arr) {
-    if (val == arr[i]) {
-      return i;
+const arr1 = [1, 2, 3, 4, 5];
+
+function find(arr, cb) {
+  for (let i = 0; i < arr.length; i++) {
+    if (cb(arr[i], i, arr)) {
+      return arr[i];
     }
   }
-
-  return false;
 }
 
-console.log(find(arr, 3));
+console.log(
+  find(arr1, (item) => {
+    return item === 2;
+  })
+);
 
-function findIndex(arr, val) {
+const arr2 = [1, 2, 3, 4, 5];
+
+function findIndex(arr, cb) {
   let newArr = [];
   for (let i = 0; i < arr.length; i++) {
-    newArr.push(arr[i]);
+    if (cb(arr[i], i, arr)) {
+      newArr.push(arr[i]);
+    }
   }
   return newArr;
 }
 
-console.log(findIndex(arr, 3));
+console.log(
+  findIndex(arr2, (item, index) => {
+    return index === 4;
+  })
+);
 
+const arr3 = [1, 2, 3, 4, 5];
 function includes(array, arrayValue) {
   for (let value of array) {
-    if (value == arrayValue) {
+    if (value === arrayValue) {
       return true;
     }
   }
   return false;
 }
-console.log(includes(arr, 2));
+console.log(includes(arr3, 2));
 
-function everyArray(array) {
-  let newArr = [];
-  for (let key in array) {
-    if (typeof array[key] != "undefined") {
-      newArr.push(key);
+const arr4 = [1, 2, 3, 4, 5];
+
+const every = function (arr, callback) {
+  for (let i = 0; i < arr.length; i++) {
+    if (!callback(arr[i], i, arr)) {
+      return false;
     }
   }
-  return newArr;
+  return true;
+};
+
+console.log(
+  every(arr4, (item) => {
+    return item > 0;
+  })
+);
+
+const arr5 = [1, 2, 3, 4, 5];
+function some(arr, cb) {
+  for (let i = 0; i < arr.length; i++) {
+    if (cb(arr[i], i, arr)) {
+      return true;
+    }
+  }
+  return false;
 }
 
-console.log(everyArray(arr));
-
-const THRESHOLD = 12;
-const v = [5, 2, 16, 4, 3, 18, 20];
-let res;
-
-res = v.every(function (element, index, array) {
-  console.log("element:", element);
-  if (element >= THRESHOLD) {
-    return false;
-  }
-
-  return true;
-});
-console.log("res:", res);
-
-res = v.some(function (element, index, array) {
-  console.log("element:", element);
-  if (element >= THRESHOLD) {
-    return true;
-  }
-
-  return false;
-});
-console.log("res:", res);
-
-const a = [1, 3, 5, 6, 7, 9];
-let firstEven;
-let i = 0;
-a.some(function (x) {
-  i++;
-  if (!(x % 2)) {
-    firstEven = x;
-    return true;
-  }
-});
-console.log([firstEven, i]);
+console.log(
+  some(arr5, (item) => {
+    return item === 3;
+  })
+);
 
 // Вам нужно написать функции indexOf, lastIndexOf, find, findIndex,
 // includes, every и some, которые работают так же, как одноименные
